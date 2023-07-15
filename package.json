@@ -1,0 +1,21 @@
+{
+  "name": "eveonline-db-tables",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev ./src/index.ts"
+  },
+  "keywords": [],
+  "author": "Buck Brady <bbrady145@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.4.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@supercharge/collections": "^5.0.1",
+    "nunjucks": "^3.2.4"
+  }
+}
