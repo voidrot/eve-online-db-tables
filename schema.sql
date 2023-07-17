@@ -1,5 +1,6 @@
 CREATE TABLE alliances
 (
+    alliance_id             integer,     -- ID of the alliance
     creator_corporation_id  integer,     -- ID of the corporation that created the alliance
     creator_id              integer,     -- ID of the character that created the alliance
     date_founded            timestamptz, -- date_founded string
@@ -10,6 +11,7 @@ CREATE TABLE alliances
 );
 CREATE TABLE alliances_contacts
 (
+    alliance_id             integer,     -- ID of the alliance
     contact_id   integer, -- contact_id integer
     contact_type text,    -- contact_type string
     label_ids    jsonb,   -- label_ids array
@@ -17,11 +19,13 @@ CREATE TABLE alliances_contacts
 );
 CREATE TABLE alliances_contacts_labels
 (
+    alliance_id             integer,     -- ID of the alliance
     label_id   bigint, -- label_id integer
     label_name text    -- label_name string
 );
 CREATE TABLE alliances_icons
 (
+    alliance_id             integer,     -- ID of the alliance
     px128x128 text, -- px128x128 string
     px64x64   text  -- px64x64 string
 );
