@@ -31,6 +31,7 @@ CREATE TABLE alliances_icons
 );
 CREATE TABLE characters
 (
+    character_id    integer,     -- The character's ID
     alliance_id     integer,     -- The character's alliance ID
     birthday        timestamptz, -- Creation date of the character
     bloodline_id    integer,     -- bloodline_id integer
@@ -45,6 +46,7 @@ CREATE TABLE characters
 );
 CREATE TABLE characters_agents_research
 (
+    character_id    integer,     -- The character's ID
     agent_id         integer,    -- agent_id integer
     points_per_day   float,      -- points_per_day number
     remainder_points float,      -- remainder_points number
@@ -53,6 +55,7 @@ CREATE TABLE characters_agents_research
 );
 CREATE TABLE characters_assets
 (
+    character_id    integer,     -- The character's ID
     is_blueprint_copy boolean, -- is_blueprint_copy boolean
     is_singleton      boolean, -- is_singleton boolean
     item_id           bigint,  -- item_id integer
@@ -64,6 +67,7 @@ CREATE TABLE characters_assets
 );
 CREATE TABLE characters_attributes
 (
+    character_id    integer,     -- The character's ID
     accrued_remap_cooldown_date timestamptz, -- Neural remapping cooldown after a character uses remap accrued over time
     bonus_remaps                integer,     -- Number of available bonus character neural remaps
     charisma                    integer,     -- charisma integer
@@ -75,6 +79,7 @@ CREATE TABLE characters_attributes
 );
 CREATE TABLE characters_blueprints
 (
+    character_id    integer,     -- The character's ID
     item_id             bigint,  -- Unique ID for this item.
     location_flag       text,    -- Type of the location_id
     location_id         bigint,  -- References a station, a ship or an item_id if this blueprint is located within a container. If the return value is an item_id, then the Character AssetList API must be queried to find the container using the given item_id to determine the correct location of the Blueprint.
@@ -86,6 +91,7 @@ CREATE TABLE characters_blueprints
 );
 CREATE TABLE characters_bookmarks
 (
+    character_id    integer,     -- The character's ID
     bookmark_id integer,     -- bookmark_id integer
     coordinates jsonb,       -- Optional object that is returned if a bookmark was made on a planet or a random location in space.
     created     timestamptz, -- created string
@@ -98,11 +104,13 @@ CREATE TABLE characters_bookmarks
 );
 CREATE TABLE characters_bookmarks_folders
 (
+    character_id    integer,     -- The character's ID
     folder_id integer, -- folder_id integer
     name      text     -- name string
 );
 CREATE TABLE characters_calendar
 (
+    character_id    integer,     -- The character's ID
     event_date     timestamptz, -- event_date string
     event_id       integer,     -- event_id integer
     event_response text,        -- event_response string
@@ -111,6 +119,7 @@ CREATE TABLE characters_calendar
 );
 CREATE TABLE characters_calendar
 (
+    character_id    integer,     -- The character's ID
     event_id   integer,     -- The id of the event requested
     date       timestamptz, -- date string
     duration   integer,     -- Length in minutes
@@ -124,12 +133,14 @@ CREATE TABLE characters_calendar
 );
 CREATE TABLE characters_calendar_attendees
 (
+    character_id    integer,     -- The character's ID
     event_id       integer, -- The id of the event requested
-    character_id   integer, -- character_id integer
+    attendee_id   integer, -- The ID of the attendee
     event_response text     -- event_response string
 );
 CREATE TABLE characters_clones
 (
+    character_id    integer,     -- The character's ID
     home_location            jsonb,       -- home_location object
     jump_clones              jsonb,       -- jump_clones array
     last_clone_jump_date     timestamptz, -- last_clone_jump_date string
@@ -137,6 +148,7 @@ CREATE TABLE characters_clones
 );
 CREATE TABLE characters_contacts
 (
+    character_id    integer,     -- The character's ID
     contact_id   integer, -- contact_id integer
     contact_type text,    -- contact_type string
     is_blocked   boolean, -- Whether this contact is in the blocked list. Note a missing value denotes unknown, not true or false
@@ -146,6 +158,7 @@ CREATE TABLE characters_contacts
 );
 CREATE TABLE characters_contacts_labels
 (
+    character_id    integer,     -- The character's ID
     label_id   bigint, -- label_id integer
     label_name text    -- label_name string
 );
@@ -192,8 +205,9 @@ CREATE TABLE characters_contracts_items
     record_id    bigint,  -- Unique ID for the item
     type_id      integer  -- Type ID for item
 );
-CREATE TABLE characters_corporationhistory
+CREATE TABLE characters_corporation_history
 (
+    character_id    integer,     -- The character's ID
     corporation_id integer,    -- corporation_id integer
     is_deleted     boolean,    -- True if the corporation has been deleted
     record_id      integer,    -- An incrementing ID that can be used to canonically establish order of records in cases where dates may be ambiguous
@@ -201,12 +215,14 @@ CREATE TABLE characters_corporationhistory
 );
 CREATE TABLE characters_fatigue
 (
+    character_id    integer,     -- The character's ID
     jump_fatigue_expire_date timestamptz, -- Character's jump fatigue expiry
     last_jump_date           timestamptz, -- Character's last jump activation
     last_update_date         timestamptz  -- Character's last jump update
 );
 CREATE TABLE characters_fittings
 (
+    character_id    integer,     -- The character's ID
     description  text,    -- description string
     fitting_id   integer, -- fitting_id integer
     items        jsonb,   -- items array
@@ -215,6 +231,7 @@ CREATE TABLE characters_fittings
 );
 CREATE TABLE characters_fleet
 (
+    character_id    integer,     -- The character's ID
     fleet_id bigint, -- The character's current fleet ID
     role     text,   -- Member’s role in fleet
     squad_id bigint, -- ID of the squad the member is in. If not applicable, will be set to -1
@@ -222,6 +239,7 @@ CREATE TABLE characters_fleet
 );
 CREATE TABLE characters_fw_stats
 (
+    character_id    integer,     -- The character's ID
     current_rank   integer,     -- The given character's current faction rank
     enlisted_on    timestamptz, -- The enlistment date of the given character into faction warfare. Will not be included if character is not enlisted in faction warfare
     faction_id     integer,     -- The faction the given character is enlisted to fight for. Will not be included if character is not enlisted in faction warfare
@@ -261,17 +279,20 @@ CREATE TABLE characters_industry_jobs
 );
 CREATE TABLE characters_location
 (
+    character_id    integer,     -- The character's ID
     solar_system_id integer, -- solar_system_id integer
     station_id      integer, -- station_id integer
     structure_id    bigint   -- structure_id integer
 );
 CREATE TABLE characters_loyalty_points
 (
+    character_id    integer,     -- The character's ID
     corporation_id integer, -- corporation_id integer
     loyalty_points integer  -- loyalty_points integer
 );
-CREATE TABLE characters_mail
+CREATE TABLE characters_mail_headers
 (
+    character_id    integer,     -- The character's ID
     _from      integer,    -- From whom the mail was sent
     is_read    boolean,    -- is_read boolean
     labels     jsonb,      -- labels array
@@ -282,16 +303,19 @@ CREATE TABLE characters_mail
 );
 CREATE TABLE characters_mail_labels
 (
+    character_id    integer,     -- The character's ID
     labels             jsonb,  -- labels array
     total_unread_count integer -- total_unread_count integer
 );
 CREATE TABLE characters_mail_lists
 (
+    character_id    integer,     -- The character's ID
     mailing_list_id integer, -- Mailing list ID
     name            text     -- name string
 );
 CREATE TABLE characters_mail
 (
+    character_id    integer,     -- The character's ID
     mail_id    integer,    -- An EVE mail ID
     body       text,       -- Mail's body
     _from      integer,    -- From whom the mail was sent
@@ -303,6 +327,7 @@ CREATE TABLE characters_mail
 );
 CREATE TABLE characters_medals
 (
+    character_id    integer,     -- The character's ID
     corporation_id integer,     -- corporation_id integer
     date           timestamptz, -- date string
     description    text,        -- description string
@@ -315,6 +340,7 @@ CREATE TABLE characters_medals
 );
 CREATE TABLE characters_mining
 (
+    character_id    integer,     -- The character's ID
     date            timestamptz, -- date string
     quantity        bigint,      -- quantity integer
     solar_system_id integer,     -- solar_system_id integer
@@ -322,6 +348,7 @@ CREATE TABLE characters_mining
 );
 CREATE TABLE characters_notifications
 (
+    character_id    integer,     -- The character's ID
     is_read         boolean,     -- is_read boolean
     notification_id bigint,      -- notification_id integer
     sender_id       integer,     -- sender_id integer
@@ -332,14 +359,16 @@ CREATE TABLE characters_notifications
 );
 CREATE TABLE characters_notifications_contacts
 (
+    character_id    integer,     -- The character's ID
     message             text,        -- message string
     notification_id     integer,     -- notification_id integer
     send_date           timestamptz, -- send_date string
     sender_character_id integer,     -- sender_character_id integer
     standing_level      float        -- A number representing the standing level the receiver has been added at by the sender. The standing levels are as follows: -10 -> Terrible | -5 -> Bad |  0 -> Neutral |  5 -> Good |  10 -> Excellent
 );
-CREATE TABLE characters_online
+CREATE TABLE characters_online_history
 (
+    character_id    integer,     -- The character's ID
     last_login  timestamptz, -- Timestamp of the last login
     last_logout timestamptz, -- Timestamp of the last logout
     logins      integer,     -- Total number of times the character has logged in
@@ -347,11 +376,13 @@ CREATE TABLE characters_online
 );
 CREATE TABLE characters_opportunities
 (
+    character_id    integer,     -- The character's ID
     completed_at timestamptz, -- completed_at string
     task_id      integer      -- task_id integer
 );
 CREATE TABLE characters_orders
 (
+    character_id    integer,     -- The character's ID
     duration       integer,     -- Number of days for which order is valid (starting from the issued date). An order expires at time issued + duration
     escrow         numeric,     -- For buy orders, the amount of ISK in escrow
     is_buy_order   boolean,     -- True if the order is a bid (buy) order
@@ -369,6 +400,7 @@ CREATE TABLE characters_orders
 );
 CREATE TABLE characters_orders_history
 (
+    character_id    integer,     -- The character's ID
     duration       integer,     -- Number of days the order was valid for (starting from the issued date). An order expires at time issued + duration
     escrow         numeric,     -- For buy orders, the amount of ISK in escrow
     is_buy_order   boolean,     -- True if the order is a bid (buy) order
@@ -387,6 +419,7 @@ CREATE TABLE characters_orders_history
 );
 CREATE TABLE characters_planets
 (
+    character_id    integer,     -- The character's ID
     last_update     timestamptz, -- last_update string
     num_pins        integer,     -- num_pins integer
     owner_id        integer,     -- owner_id integer
@@ -395,8 +428,9 @@ CREATE TABLE characters_planets
     solar_system_id integer,     -- solar_system_id integer
     upgrade_level   integer      -- upgrade_level integer
 );
-CREATE TABLE characters_planets
+CREATE TABLE characters_planets_layout
 (
+    character_id    integer,     -- The character's ID
     planet_id integer, -- Planet id of the target planet
     links     jsonb,   -- links array
     pins      jsonb,   -- pins array
@@ -404,6 +438,7 @@ CREATE TABLE characters_planets
 );
 CREATE TABLE characters_portrait
 (
+    character_id    integer,     -- The character's ID
     px128x128 text, -- px128x128 string
     px256x256 text, -- px256x256 string
     px512x512 text, -- px512x512 string
@@ -411,6 +446,7 @@ CREATE TABLE characters_portrait
 );
 CREATE TABLE characters_roles
 (
+    character_id    integer,     -- The character's ID
     roles          jsonb, -- roles array
     roles_at_base  jsonb, -- roles_at_base array
     roles_at_hq    jsonb, -- roles_at_hq array
@@ -418,12 +454,14 @@ CREATE TABLE characters_roles
 );
 CREATE TABLE characters_ship
 (
+    character_id    integer,     -- The character's ID
     ship_item_id bigint, -- Item id's are unique to a ship and persist until it is repackaged. This value can be used to track repeated uses of a ship, or detect when a pilot changes into a different instance of the same ship type.
     ship_name    text,   -- ship_name string
     ship_type_id integer -- ship_type_id integer
 );
 CREATE TABLE characters_skillqueue
 (
+    character_id    integer,     -- The character's ID
     finish_date       timestamptz, -- Date on which training of the skill will complete. Omitted if the skill queue is paused.
     finished_level    integer,     -- finished_level integer
     level_end_sp      integer,     -- level_end_sp integer
@@ -435,23 +473,27 @@ CREATE TABLE characters_skillqueue
 );
 CREATE TABLE characters_skills
 (
+    character_id    integer,     -- The character's ID
     skills         jsonb,  -- skills array
     total_sp       bigint, -- total_sp integer
     unallocated_sp integer -- Skill points available to be assigned
 );
 CREATE TABLE characters_standings
 (
+    character_id    integer,     -- The character's ID
     from_id   integer, -- from_id integer
     from_type text,    -- from_type string
     standing  float    -- standing number
 );
 CREATE TABLE characters_titles
 (
+    character_id    integer,     -- The character's ID
     name     text,   -- name string
     title_id integer -- title_id integer
 );
 CREATE TABLE characters_wallet
 (
+    character_id    integer,     -- The character's ID
     wallet_balance numeric -- Wallet balance
 );
 CREATE TABLE characters_wallet_journal
