@@ -452,6 +452,7 @@ CREATE TABLE characters_wallet
 );
 CREATE TABLE characters_wallet_journal
 (
+    character_id    integer,     -- ID of the character who owns the wallet
     amount          numeric,     -- The amount of ISK given or taken from the wallet as a result of the given transaction. Positive when ISK is deposited into the wallet and negative when ISK is withdrawn
     balance         numeric,     -- Wallet balance after transaction occurred
     context_id      bigint,      -- An ID that gives extra context to the particular transaction. Because of legacy reasons the context is completely different per ref_type and means different things. It is also possible to not have a context_id
@@ -468,6 +469,7 @@ CREATE TABLE characters_wallet_journal
 );
 CREATE TABLE characters_wallet_transactions
 (
+    character_id   integer,     -- ID of the character who owns the wallet
     client_id      integer,     -- client_id integer
     date           timestamptz, -- Date and time of transaction
     is_buy         boolean,     -- is_buy boolean
@@ -542,6 +544,7 @@ CREATE TABLE corporations_npccorps
 );
 CREATE TABLE corporations
 (
+    corporation_id  integer,     -- The corporation ID
     alliance_id     integer,     -- ID of the alliance that corporation is a member of, if any
     ceo_id          integer,     -- ceo_id integer
     creator_id      integer,     -- creator_id integer
@@ -559,13 +562,15 @@ CREATE TABLE corporations
 );
 CREATE TABLE corporations_alliancehistory
 (
-    alliance_id integer,    -- alliance_id integer
-    is_deleted  boolean,    -- True if the alliance has been closed
-    record_id   integer,    -- An incrementing ID that can be used to canonically establish order of records in cases where dates may be ambiguous
-    start_date  timestamptz -- start_date string
+    corporation_id integer,    -- The corporation ID
+    alliance_id    integer,    -- alliance_id integer
+    is_deleted     boolean,    -- True if the alliance has been closed
+    record_id      integer,    -- An incrementing ID that can be used to canonically establish order of records in cases where dates may be ambiguous
+    start_date     timestamptz -- start_date string
 );
 CREATE TABLE corporations_assets
 (
+    corporation_id    integer, -- The corporation ID
     is_blueprint_copy boolean, -- is_blueprint_copy boolean
     is_singleton      boolean, -- is_singleton boolean
     item_id           bigint,  -- item_id integer
@@ -577,6 +582,7 @@ CREATE TABLE corporations_assets
 );
 CREATE TABLE corporations_blueprints
 (
+    corporation_id      integer, -- The corporation ID
     item_id             bigint,  -- Unique ID for this item.
     location_flag       text,    -- Type of the location_id
     location_id         bigint,  -- References a station, a ship or an item_id if this blueprint is located within a container.
@@ -588,37 +594,42 @@ CREATE TABLE corporations_blueprints
 );
 CREATE TABLE corporations_bookmarks
 (
-    bookmark_id integer,     -- bookmark_id integer
-    coordinates jsonb,       -- Optional object that is returned if a bookmark was made on a planet or a random location in space.
-    created     timestamptz, -- created string
-    creator_id  integer,     -- creator_id integer
-    folder_id   integer,     -- folder_id integer
-    item        jsonb,       -- Optional object that is returned if a bookmark was made on a particular item.
-    label       text,        -- label string
-    location_id integer,     -- location_id integer
-    notes       text         -- notes string
+    corporation_id integer,     -- The corporation ID
+    bookmark_id    integer,     -- bookmark_id integer
+    coordinates    jsonb,       -- Optional object that is returned if a bookmark was made on a planet or a random location in space.
+    created        timestamptz, -- created string
+    creator_id     integer,     -- creator_id integer
+    folder_id      integer,     -- folder_id integer
+    item           jsonb,       -- Optional object that is returned if a bookmark was made on a particular item.
+    label          text,        -- label string
+    location_id    integer,     -- location_id integer
+    notes          text         -- notes string
 );
 CREATE TABLE corporations_bookmarks_folders
 (
-    creator_id integer, -- creator_id integer
-    folder_id  integer, -- folder_id integer
-    name       text     -- name string
+    corporation_id integer, -- The corporation ID
+    creator_id     integer, -- creator_id integer
+    folder_id      integer, -- folder_id integer
+    name           text     -- name string
 );
 CREATE TABLE corporations_contacts
 (
-    contact_id   integer, -- contact_id integer
-    contact_type text,    -- contact_type string
-    is_watched   boolean, -- Whether this contact is being watched
-    label_ids    jsonb,   -- label_ids array
-    standing     float    -- Standing of the contact
+    corporation_id integer, -- The corporation ID
+    contact_id     integer, -- contact_id integer
+    contact_type   text,    -- contact_type string
+    is_watched     boolean, -- Whether this contact is being watched
+    label_ids      jsonb,   -- label_ids array
+    standing       float    -- Standing of the contact
 );
 CREATE TABLE corporations_contacts_labels
 (
-    label_id   bigint, -- label_id integer
-    label_name text    -- label_name string
+    corporation_id integer, -- The corporation ID
+    label_id       bigint,  -- label_id integer
+    label_name     text     -- label_name string
 );
 CREATE TABLE corporations_containers_logs
 (
+    corporation_id     integer,     -- The corporation ID
     action             text,        -- action string
     character_id       integer,     -- ID of the character who performed the action.
     container_id       bigint,      -- ID of the container
@@ -634,6 +645,7 @@ CREATE TABLE corporations_containers_logs
 );
 CREATE TABLE corporations_contracts
 (
+    corporation_id        integer,     -- The corporation ID
     acceptor_id           integer,     -- Who will accept the contract
     assignee_id           integer,     -- ID to whom the contract is assigned, can be corporation or character ID
     availability          text,        -- To whom the contract is available
@@ -677,6 +689,7 @@ CREATE TABLE corporations_contracts_items
 );
 CREATE TABLE corporations_customs_offices
 (
+    corporation_id              integer, -- The corporation ID
     alliance_tax_rate           float,   -- Only present if alliance access is allowed
     allow_access_with_standings boolean, -- standing_level and any standing related tax rate only present when this is true
     allow_alliance_access       boolean, -- allow_alliance_access boolean
@@ -694,17 +707,20 @@ CREATE TABLE corporations_customs_offices
 );
 CREATE TABLE corporations_divisions
 (
-    hangar jsonb, -- hangar array
-    wallet jsonb  -- wallet array
+    corporation_id integer, -- The corporation ID
+    hangar         jsonb,   -- hangar array
+    wallet         jsonb    -- wallet array
 );
 CREATE TABLE corporations_facilities
 (
-    facility_id bigint,  -- facility_id integer
-    system_id   integer, -- system_id integer
-    type_id     integer  -- type_id integer
+    corporation_id integer, -- The corporation ID
+    facility_id    bigint,  -- facility_id integer
+    system_id      integer, -- system_id integer
+    type_id        integer  -- type_id integer
 );
 CREATE TABLE corporations_fw_stats
 (
+    corporation_id integer,     -- The corporation ID
     enlisted_on    timestamptz, -- The enlistment date of the given corporation into faction warfare. Will not be included if corporation is not enlisted in faction warfare
     faction_id     integer,     -- The faction the given corporation is enlisted to fight for. Will not be included if corporation is not enlisted in faction warfare
     kills          jsonb,       -- Summary of kills done by the given corporation against enemy factions
@@ -713,12 +729,14 @@ CREATE TABLE corporations_fw_stats
 );
 CREATE TABLE corporations_icons
 (
-    px128x128 text, -- px128x128 string
-    px256x256 text, -- px256x256 string
-    px64x64   text  -- px64x64 string
+    corporation_id integer, -- The corporation ID
+    px128x128      text,    -- px128x128 string
+    px256x256      text,    -- px256x256 string
+    px64x64        text     -- px64x64 string
 );
 CREATE TABLE corporations_industry_jobs
 (
+    corporation_id         integer,     -- The corporation ID
     activity_id            integer,     -- Job activity ID
     blueprint_id           bigint,      -- blueprint_id integer
     blueprint_location_id  bigint,      -- Location ID of the location from which the blueprint was installed. Normally a station ID, but can also be an asset (e.g. container) or corporation facility
@@ -744,20 +762,22 @@ CREATE TABLE corporations_industry_jobs
 );
 CREATE TABLE corporations_medals
 (
-    created_at  timestamptz, -- created_at string
-    creator_id  integer,     -- ID of the character who created this medal
-    description text,        -- description string
-    medal_id    integer,     -- medal_id integer
-    title       text         -- title string
+    corporation_id integer,     -- The corporation ID
+    created_at     timestamptz, -- created_at string
+    creator_id     integer,     -- ID of the character who created this medal
+    description    text,        -- description string
+    medal_id       integer,     -- medal_id integer
+    title          text         -- title string
 );
 CREATE TABLE corporations_medals_issued
 (
-    character_id integer,     -- ID of the character who was rewarded this medal
-    issued_at    timestamptz, -- issued_at string
-    issuer_id    integer,     -- ID of the character who issued the medal
-    medal_id     integer,     -- medal_id integer
-    reason       text,        -- reason string
-    status       text         -- status string
+    corporation_id integer,     -- The corporation ID
+    character_id   integer,     -- ID of the character who was rewarded this medal
+    issued_at      timestamptz, -- issued_at string
+    issuer_id      integer,     -- ID of the character who issued the medal
+    medal_id       integer,     -- medal_id integer
+    reason         text,        -- reason string
+    status         text         -- status string
 );
 CREATE TABLE corporations_members
 (
@@ -771,21 +791,24 @@ CREATE TABLE corporations_members_limit
 );
 CREATE TABLE corporations_members_titles
 (
-    character_id integer, -- character_id integer
-    titles       jsonb    -- A list of title_id
+    corporation_id integer, -- The corporation ID
+    character_id   integer, -- character_id integer
+    titles         jsonb    -- A list of title_id
 );
 CREATE TABLE corporations_membertracking
 (
-    base_id      integer,     -- base_id integer
-    character_id integer,     -- character_id integer
-    location_id  bigint,      -- location_id integer
-    logoff_date  timestamptz, -- logoff_date string
-    logon_date   timestamptz, -- logon_date string
-    ship_type_id integer,     -- ship_type_id integer
-    start_date   timestamptz  -- start_date string
+    corporation_id integer,     -- The corporation ID
+    base_id        integer,     -- base_id integer
+    character_id   integer,     -- character_id integer
+    location_id    bigint,      -- location_id integer
+    logoff_date    timestamptz, -- logoff_date string
+    logon_date     timestamptz, -- logon_date string
+    ship_type_id   integer,     -- ship_type_id integer
+    start_date     timestamptz  -- start_date string
 );
 CREATE TABLE corporations_orders
 (
+    corporation_id  integer,     -- The corporation ID
     duration        integer,     -- Number of days for which order is valid (starting from the issued date). An order expires at time issued + duration
     escrow          numeric,     -- For buy orders, the amount of ISK in escrow
     is_buy_order    boolean,     -- True if the order is a bid (buy) order
@@ -804,6 +827,7 @@ CREATE TABLE corporations_orders
 );
 CREATE TABLE corporations_orders_history
 (
+    corporation_id  integer,     -- The corporation ID
     duration        integer,     -- Number of days the order was valid for (starting from the issued date). An order expires at time issued + duration
     escrow          numeric,     -- For buy orders, the amount of ISK in escrow
     is_buy_order    boolean,     -- True if the order is a bid (buy) order
@@ -823,6 +847,7 @@ CREATE TABLE corporations_orders_history
 );
 CREATE TABLE corporations_roles
 (
+    corporation_id           integer, -- The corporation ID
     character_id             integer, -- character_id integer
     grantable_roles          jsonb,   -- grantable_roles array
     grantable_roles_at_base  jsonb,   -- grantable_roles_at_base array
@@ -835,27 +860,31 @@ CREATE TABLE corporations_roles
 );
 CREATE TABLE corporations_roles_history
 (
-    changed_at   timestamptz, -- changed_at string
-    character_id integer,     -- The character whose roles are changed
-    issuer_id    integer,     -- ID of the character who issued this change
-    new_roles    jsonb,       -- new_roles array
-    old_roles    jsonb,       -- old_roles array
-    role_type    text         -- role_type string
+    corporation_id integer,     -- The corporation ID
+    changed_at     timestamptz, -- changed_at string
+    character_id   integer,     -- The character whose roles are changed
+    issuer_id      integer,     -- ID of the character who issued this change
+    new_roles      jsonb,       -- new_roles array
+    old_roles      jsonb,       -- old_roles array
+    role_type      text         -- role_type string
 );
 CREATE TABLE corporations_shareholders
 (
+    corporation_id   integer, -- The corporation ID
     share_count      bigint,  -- share_count integer
     shareholder_id   integer, -- shareholder_id integer
     shareholder_type text     -- shareholder_type string
 );
 CREATE TABLE corporations_standings
 (
-    from_id   integer, -- from_id integer
-    from_type text,    -- from_type string
-    standing  float    -- standing number
+    corporation_id integer, -- The corporation ID
+    from_id        integer, -- from_id integer
+    from_type      text,    -- from_type string
+    standing       float    -- standing number
 );
 CREATE TABLE corporations_starbases
 (
+    corporation_id                           integer, -- The corporation ID
     starbase_id                              bigint,  -- An EVE starbase (POS) ID
     allow_alliance_members                   boolean, -- allow_alliance_members boolean
     allow_corporation_members                boolean, -- allow_corporation_members boolean
@@ -892,24 +921,27 @@ CREATE TABLE corporations_structures
 );
 CREATE TABLE corporations_titles
 (
-    grantable_roles          jsonb,  -- grantable_roles array
-    grantable_roles_at_base  jsonb,  -- grantable_roles_at_base array
-    grantable_roles_at_hq    jsonb,  -- grantable_roles_at_hq array
-    grantable_roles_at_other jsonb,  -- grantable_roles_at_other array
-    name                     text,   -- name string
-    roles                    jsonb,  -- roles array
-    roles_at_base            jsonb,  -- roles_at_base array
-    roles_at_hq              jsonb,  -- roles_at_hq array
-    roles_at_other           jsonb,  -- roles_at_other array
-    title_id                 integer -- title_id integer
+    corporation_id           integer, -- The corporation ID
+    grantable_roles          jsonb,   -- grantable_roles array
+    grantable_roles_at_base  jsonb,   -- grantable_roles_at_base array
+    grantable_roles_at_hq    jsonb,   -- grantable_roles_at_hq array
+    grantable_roles_at_other jsonb,   -- grantable_roles_at_other array
+    name                     text,    -- name string
+    roles                    jsonb,   -- roles array
+    roles_at_base            jsonb,   -- roles_at_base array
+    roles_at_hq              jsonb,   -- roles_at_hq array
+    roles_at_other           jsonb,   -- roles_at_other array
+    title_id                 integer  -- title_id integer
 );
 CREATE TABLE corporations_wallets
 (
-    balance  numeric, -- balance number
-    division integer  -- division integer
+    corporation_id integer, -- The corporation ID
+    balance        numeric, -- balance number
+    division       integer  -- division integer
 );
 CREATE TABLE corporations_wallets_division_journal
 (
+    corporation_id  integer,     -- The corporation ID
     division        integer,     -- Wallet key of the division to fetch journals from
     amount          numeric,     -- The amount of ISK given or taken from the wallet as a result of the given transaction. Positive when ISK is deposited into the wallet and negative when ISK is withdrawn
     balance         numeric,     -- Wallet balance after transaction occurred
@@ -927,6 +959,7 @@ CREATE TABLE corporations_wallets_division_journal
 );
 CREATE TABLE corporations_wallets_division_transactions
 (
+    corporation_id integer,     -- The corporation ID
     division       integer,     -- Wallet key of the division to fetch journals from
     client_id      integer,     -- client_id integer
     date           timestamptz, -- Date and time of transaction
@@ -1100,6 +1133,7 @@ CREATE TABLE markets_structures
 );
 CREATE TABLE markets_history
 (
+    type_id     integer,     -- The Type ID that this entry refers to
     region_id   integer,     -- Return statistics in this region
     average     numeric,     -- average number
     date        timestamptz, -- The date of this historical statistic entry
@@ -1169,7 +1203,6 @@ CREATE TABLE sovereignty_structures
     vulnerability_occupancy_level float,       -- The occupancy level for the next or current vulnerability window. This takes into account all development indexes and capital system bonuses. Also known as Activity Defense Multiplier from in the client. It increases the time that attackers must spend using their entosis links on the structure.
     vulnerable_end_time           timestamptz, -- The time at which the next or current vulnerability window ends. At the end of a vulnerability window the next window is recalculated and locked in along with the vulnerabilityOccupancyLevel. If the structure is not in 100% entosis control of the defender, it will go in to 'overtime' and stay vulnerable for as long as that situation persists. Only once the defenders have 100% entosis control and has the vulnerableEndTime passed does the vulnerability interval expire and a new one is calculated.
     vulnerable_start_time         timestamptz  -- The next time at which the structure will become vulnerable. Or the start time of the current window if current time is between this and vulnerableEndTime.
-
 );
 CREATE TABLE status
 (
@@ -1332,7 +1365,6 @@ CREATE TABLE universe_structures
     name            text,    -- The full name of the structure
     owner_id        integer, -- The ID of the corporation who owns this particular structure
     position        jsonb,   -- Coordinates of the structure in Cartesian space relative to the Sun, in metres.
-
     solar_system_id integer, -- solar_system_id integer
     type_id         integer  -- type_id integer
 );
@@ -1382,7 +1414,6 @@ CREATE TABLE universe_types
 );
 CREATE TABLE wars
 (
-    war_id          integer,     -- ID for a war
     aggressor       jsonb,       -- The aggressor corporation or alliance that declared this war, only contains either corporation_id or alliance_id
     allies          jsonb,       -- allied corporations or alliances, each object contains either corporation_id or alliance_id
     declared        timestamptz, -- Time that the war was declared
